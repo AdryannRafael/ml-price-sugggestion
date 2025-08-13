@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import img from "../../public/price.png";
 const { send } = useMlProxy();
 const route = useRouter();
 // const search = async () => {
@@ -87,7 +86,11 @@ function redirectToLogin() {
               >
                
               </div> -->
-            <img class="w-90" :src="img" alt="" />
+            <img
+              src="/price.png"
+              class="w-full max-w-md"
+              alt="Price Suggestion"
+            />
             <!-- </div> -->
           </div>
         </div>
