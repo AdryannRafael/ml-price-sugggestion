@@ -1,4 +1,5 @@
 import { handleCallback } from "~/lib/auth";
+import { ML_SESSION } from "~/lib/contants";
 import { createSession } from "~/lib/session";
 export default defineEventHandler(async (event) => {
   // 1. Trocar code por token no Mercado Livre
@@ -18,7 +19,7 @@ export default defineEventHandler(async (event) => {
   });
 
   // 3. Configurar cookie seguro
-  setCookie(event, "ml_session", session.id, {
+  setCookie(event, ML_SESSION, session.id, {
     httpOnly: true,
     secure: true, // HTTPS obrigatório
     sameSite: "strict",

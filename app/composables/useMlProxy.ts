@@ -5,10 +5,13 @@ export const useMlProxy = () => {
   const send = async <R /* Response Type */, B = any /* Body Type */>(
     request: () => Promise<MlProxyFetch<B>>
   ) => {
-    return useFetch<R>("/api/proxy/ml", {
+    const { data, error } = await useFetch("/api/proxy/ml", {
+      method: "POST",
       body: { request: await request() },
       credentials: "include",
     });
+
+    return { data: data.value, error: error.value };
   };
 
   return {

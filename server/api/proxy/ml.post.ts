@@ -1,6 +1,10 @@
 import type { MlProxyFetch } from "@/dto/input";
 import { getSession } from "@/lib/session";
-export default defineEventHandler(async (event) => {
+
+export default defineEventHandler<any>(async (event) => {
+  const config = useRuntimeConfig();
+
+  const mlUri: string = config.ML_BASE_URI!;
   const sessionId = getCookie(event, "ml_session");
   if (!sessionId) throw createError({ statusCode: 401 });
 
@@ -15,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const fetchedMlRes = await $fetch<any>(fetchMl, {
-      baseURL: "https://api.mercadolibre.com",
+      baseURL: mlUri,
       headers: {
         Authorization: `Bearer ${session.mlAccessToken}`,
         "Content-Type": "application/json",
@@ -29,11 +33,4 @@ export default defineEventHandler(async (event) => {
       status: data.status,
     });
   }
-
-  // if(fethedMlRes.error){
-  //   return createError({
-  //     message: fethedMlRes.data
-  //   })
-  // }
-  // return fethedMlRes; //.error;
 });

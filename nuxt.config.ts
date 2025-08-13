@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  // app: {
+  //   pageTransition: { name: "page", mode: "out-in" },
+  // },
   devServer: {
     host: "0.0.0.0",
     port: 4000,
@@ -17,11 +20,16 @@ export default defineNuxtConfig({
   //   },
   // },
   runtimeConfig: {
-    public: {
-      mlClientId: process.env.ML_CLIENT_ID,
-      mlCallbackUrl:
-        "https://receitadodia.adryannrafael.online/api/auth/callback/mercadolivre",
-    },
-    mlClientSecret: process.env.ML_CLIENT_SECRET,
+    ML_BASE_URI: process.env.ML_BASE_URI,
+    ML_AUTH_URI: process.env.ML_AUTH_URI,
+    ML_CLIENT_ID: process.env.ML_CLIENT_ID,
+    ML_CLIENT_SECRET: process.env.ML_CLIENT_SECRET,
+    NUXT_PUBLIC_BASE_URL: process.env.ML_BASE_URL,
+    //   public: {
+    //     mlClientId: process.env.ML_CLIENT_ID,
+    //     mlCallbackUrl:
+    //       "https://receitadodia.adryannrafael.online/api/auth/callback/mercadolivre",
+    //   },
+    //   mlClientSecret: process.env.ML_CLIENT_SECRET,
   },
 });

@@ -1,34 +1,14 @@
-import criptojs from "crypto-js";
 import type { TokenOutput } from "../dto/output/token.output";
-import { MercadoLivreProvider } from "./mercadolivre.provider";
-
-const { enc, SHA256 } = criptojs;
-// import {
-//   ML_REFRESH_TOKEN_STORAGE,
-//   ML_TOKEN_EXPIRATION_STORAGE,
-//   ML_USER_ID_STORAGE,
-//   ML_USER_TOKEN_STORAGE,
-// } from "../utils/constant";
+import { MercadoLivreProvider } from "../providers/mercadolivre.provider";
+import { PKCE_VERIFIER } from "./contants";
+import { generatePKCE } from "./pkce";
 
 const oidcSettings = MercadoLivreProvider();
-// Gera um code_verifier e code_challenge (PKCE)
-const generatePKCE = () => {
-  const codeVerifier = enc.Base64.stringify(
-    enc.Utf8.parse(Math.random().toString(36).substring(2, 128))
-  );
-  const codeChallenge = SHA256(codeVerifier)
-    .toString(enc.Base64)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=/g, "");
-  return { codeVerifier, codeChallenge };
-};
 
 // Redireciona para o Mercado Livre
 export const loginWithMercadoLivre = (event: any) => {
   const { codeVerifier, codeChallenge } = generatePKCE();
-  setCookie(event, "pkce_verifier", codeVerifier?.toString());
-  // localStorage.setItem("pkce_verifier", codeVerifier);
+  setCookie(event, PKCE_VERIFIER, codeVerifier?.toString());
 
   const params = new URLSearchParams({
     response_type: "code",
@@ -39,8 +19,7 @@ export const loginWithMercadoLivre = (event: any) => {
     state: "$12345",
   });
   const authUrl =
-    `https://auth.mercadolivre.com.br/authorization?` + params.toString();
-  // window.location.href = authUrl;
+    `${oidcSettings.authority}/authorization?` + params.toString();
   return authUrl;
 };
 
@@ -54,7 +33,7 @@ export const handleCallback = async (event: any) => {
       statusMessage: "Parameter code id not present",
     });
 
-  const codeVerifier = getCookie(event, "pkce_verifier");
+  const codeVerifier = getCookie(event, PKCE_VERIFIER);
 
   if (!codeVerifier) throw new Error("PKCE verifier não encontrado");
 
@@ -66,7 +45,8 @@ export const handleCallback = async (event: any) => {
     redirect_uri: oidcSettings.redirect_uri,
     code_verifier: codeVerifier,
   });
-  const fetchToken = await fetch("https://api.mercadolibre.com/oauth/token", {
+  const mlUri: string = useRuntimeConfig().ML_BASE_URI + "/oauth/token";
+  const fetchToken = await fetch(mlUri, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -74,7 +54,7 @@ export const handleCallback = async (event: any) => {
     },
     body: params,
   });
-  deleteCookie(event, "pkce_verifier");
+  deleteCookie(event, PKCE_VERIFIER);
 
   if (!fetchToken.ok) {
     throw new Error("Erro ao pegar token");
@@ -82,13 +62,5 @@ export const handleCallback = async (event: any) => {
 
   const output: TokenOutput = await fetchToken.json();
   console.log(output);
-  // localStorage.setItem(ML_USER_TOKEN_STORAGE, output.access_token);
-  // localStorage.setItem(ML_REFRESH_TOKEN_STORAGE, output.refresh_token);
-  // localStorage.setItem(ML_USER_ID_STORAGE, output.user_id.toString());
-  // localStorage.setItem(
-  //   ML_TOKEN_EXPIRATION_STORAGE,
-  //   output.expires_in.toString()
-  // );
-
   return output;
 };
