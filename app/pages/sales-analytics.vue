@@ -1,7 +1,5 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>Analise de preços</div>
 </template>
 
 <script setup></script>

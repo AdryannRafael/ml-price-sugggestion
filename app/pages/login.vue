@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+setPageLayout("blank");
+
 import { useAuthMl } from "~/composables/useAuthMl";
 import type { AuthAccessInput } from "~/dto/input/auth-access.input";
 
@@ -20,7 +22,7 @@ const listenerReturnAuthentication = async ({
   }
 
   await initSession(data);
-  router.replace("/dashboard");
+  router.replace("/sales-analytics");
 
   /**Aplicar a logica de guardar token ou outra coisa */
 };
