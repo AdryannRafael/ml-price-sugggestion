@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const { send } = useMlProxy();
+// const { send } = useMlProxy();
 const route = useRouter();
 // const search = async () => {
 //   // const b = await withAuth(async () => ({ path: `/users/me` }));
-//   const { data, error } = await send(async () => ({ path: `/users/me` }));
-//   // send<{ a: any }>(async () => ({
-//   //   path: `/suggestions/user/$USER_ID/items`,
-//   //   userID: true,
-//   // }));
+// const { data, error } = await send(async () => ({ path: `/users/me` }));
+// send<{ a: any }>(async () => ({
+//   path: `/suggestions/user/$USER_ID/items`,
+//   userID: true,
+// }));
 //   if (error) return console.error(error);
 //   console.log(data.value);
 // };
@@ -29,9 +29,11 @@ function redirectToLogin() {
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 md:h-20">
               <!-- Logo/Título -->
-              <div class="flex-shrink-0 flex items-center">
+              <!-- <div class="flex-shrink-0 flex items-center">
+                <img src="/logo.png" alt="Logo" style="width: 40px" />
                 <p class="text-2xl font-bold text-black">Melhorando Ecom</p>
-              </div>
+              </div> -->
+              <AppLogo />
 
               <!-- Menu para desktop -->
               <div class="hidden md:block">
@@ -142,40 +144,7 @@ function redirectToLogin() {
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#333333] text-white py-8 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-          <div class="mb-4 md:mb-0">
-            <p class="text-xl font-bold text-[#FFE600]">Price Suggestion</p>
-            <p class="text-[#999999]">
-              Ferramenta para vendedores do Mercado Livre
-            </p>
-          </div>
-          <div class="flex space-x-6">
-            <a
-              href="#"
-              class="text-[#EEEEEE] hover:text-[#FFE600] transition-colors"
-              >Termos</a
-            >
-            <a
-              href="#"
-              class="text-[#EEEEEE] hover:text-[#FFE600] transition-colors"
-              >Privacidade</a
-            >
-            <a
-              href="#"
-              class="text-[#EEEEEE] hover:text-[#FFE600] transition-colors"
-              >Contato</a
-            >
-          </div>
-        </div>
-        <div
-          class="mt-8 pt-8 border-t border-[#444444] text-center text-[#999999]"
-        >
-          <p>&copy; 2023 Price Suggestion. Não afiliado ao Mercado Livre.</p>
-        </div>
-      </div>
-    </footer>
+    <AppFooter />
   </div>
 </template>
 <style scoped></style>

@@ -2,7 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  dev: true,
   modules: ["@nuxtjs/tailwindcss"],
+  css: ["~/assets/css/tailwind.css"],
   tailwindcss: {
     configPath: "~/tailwind.config.js",
     exposeConfig: false,
@@ -29,7 +31,9 @@ export default defineNuxtConfig({
     ML_AUTH_URI: process.env.ML_AUTH_URI,
     ML_CLIENT_ID: process.env.ML_CLIENT_ID,
     ML_CLIENT_SECRET: process.env.ML_CLIENT_SECRET,
-    NUXT_PUBLIC_BASE_URL: process.env.ML_BASE_URL,
+    public: {
+      NUXT_PUBLIC_BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
+    },
     //   public: {
     //     mlClientId: process.env.ML_CLIENT_ID,
     //     mlCallbackUrl:
