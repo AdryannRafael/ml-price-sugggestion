@@ -1,11 +1,12 @@
 import type { MlProxyFetch } from "@/dto/input";
 import { getSession } from "@/lib/session";
+import { ML_SESSION } from "~/lib/contants";
 
 export default defineEventHandler<any>(async (event) => {
   const config = useRuntimeConfig();
 
   const mlUri: string = config.ML_BASE_URI!;
-  const sessionId = getCookie(event, "ml_session");
+  const sessionId = getCookie(event, ML_SESSION);
   if (!sessionId) throw createError({ statusCode: 401 });
 
   const session = await getSession(sessionId);

@@ -29,7 +29,7 @@
       <div
         class="mt-8 pt-8 border-t border-[#444444] text-center text-[#999999]"
       >
-        <p>&copy; 2023 Price Suggestion. Não afiliado ao Mercado Livre.</p>
+        <p>&copy; 2025 Price Suggestion. Não afiliado ao Mercado Livre.</p>
       </div>
     </div>
   </footer>

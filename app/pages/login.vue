@@ -1,10 +1,13 @@
 <script lang="ts" setup>
+import { useAuthMl } from "~/composables/useAuthMl";
 import type { AuthAccessInput } from "~/dto/input/auth-access.input";
 
 const config = useRuntimeConfig();
 const uri = config.public.NUXT_PUBLIC_BASE_URL!;
+const { initSession } = useAuthMl();
+const router = useRouter();
 
-const listenerReturnAuthentication = ({
+const listenerReturnAuthentication = async ({
   origin,
   data,
 }: MessageEvent<AuthAccessInput>) => {
@@ -16,11 +19,12 @@ const listenerReturnAuthentication = ({
     return;
   }
 
-  alert("Executando...");
+  await initSession(data);
+  router.replace("/dashboard");
+
   /**Aplicar a logica de guardar token ou outra coisa */
 };
 const loginWithML = async () => {
-  alert(uri);
   window.open(
     `${uri}/api/auth/login-with-mercadolivre`,
     "MlAuth",

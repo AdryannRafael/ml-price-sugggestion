@@ -1,16 +1,10 @@
-interface MlSession {
-  id: string;
-  mlAccessToken: string;
-  mlRefreshToken?: string;
-  mlExpiresIn: number;
-  mlUserId: string;
-  createdAt: Date;
-}
+import type { MlSessionInput } from "~/dto/input/ml-session.input";
+import type { MlSession } from "~/dto/ml-session";
 
 const sessions = new Map<string, MlSession>();
 
 export const createSession = async (
-  data: Omit<MlSession, "id" | "createdAt">
+  data: MlSessionInput
 ): Promise<MlSession> => {
   const session: MlSession = {
     id: crypto.randomUUID(),
@@ -18,6 +12,20 @@ export const createSession = async (
     createdAt: new Date(),
   };
   sessions.set(session.id, session);
+  return session;
+};
+export const refreshSession = async (
+  id: string,
+  data: MlSessionInput
+): Promise<MlSession> => {
+  const sessionLoad = await getSession(id);
+  if (!sessionLoad) throw new Error("Session not exist");
+  const session: MlSession = {
+    id: sessionLoad.id,
+    ...data,
+    createdAt: new Date(),
+  };
+  sessions.set(sessionLoad.id, session);
   return session;
 };
 

@@ -1,3 +1,4 @@
+import type { MlSession } from "~/dto/ml-session";
 import type { TokenOutput } from "../dto/output/token.output";
 import { MercadoLivreProvider } from "../providers/mercadolivre.provider";
 import { PKCE_VERIFIER } from "./contants";
@@ -63,4 +64,36 @@ export const handleCallback = async (event: any) => {
   const output: TokenOutput = await fetchToken.json();
   console.log(output);
   return output;
+};
+
+export const refresh = async (
+  e: any,
+  session: MlSession
+): Promise<TokenOutput> => {
+  const params = new URLSearchParams({
+    grant_type: "refresh_token",
+    client_id: oidcSettings.client_id,
+    client_secret: oidcSettings.client_secret,
+    refresh_token: session.mlRefreshToken!,
+  });
+  const mlUri: string = useRuntimeConfig().ML_BASE_URI + "/oauth/token";
+  const fetchToken = await fetch(mlUri, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+    body: params,
+  });
+  if (!fetchToken.ok) {
+    throw new Error("Erro ao pegar token");
+  }
+
+  const output: TokenOutput = await fetchToken.json();
+  console.log("refresh", output);
+  return output;
+};
+
+export const calculateExpirationDate = (lifeTime: number /** in seconds */) => {
+  return Date.now() + lifeTime * 1000;
 };
