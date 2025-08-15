@@ -54,7 +54,7 @@ const findProductsToSuggestion = async () => {
 const redirectToAnalysisPage = (item: DetailItemOutput) => {
   route.push({
     path: "/price-suggestions/analysis",
-    query: { itemId: item.id },
+    query: { item: item.id, name: item.title },
   });
 };
 // Carrega os produtos quando o componente é montado

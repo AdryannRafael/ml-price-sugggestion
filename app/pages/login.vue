@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-setPageLayout("blank");
-
 import { useAuthMl } from "~/composables/useAuthMl";
 import type { AuthAccessInput } from "~/dto/input/auth-access.input";
 
