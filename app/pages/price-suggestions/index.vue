@@ -16,8 +16,8 @@ const findProductsToSuggestion = async () => {
 
     // Busca IDs dos produtos
     const res = await send<PageOutput<string>>({
-      path: "/users/$USER_ID/items/search",
-      // path: "/suggestions/user/$USER_ID/items",
+      // path: "/users/$USER_ID/items/search",
+      path: "/suggestions/user/$USER_ID/items",
       userID: true,
     });
     const { info: itemsResponse, error: itemsError } = res;

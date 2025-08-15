@@ -14,9 +14,9 @@ export const useMlProxy = () => {
 
     if (error) {
       // alert(`${error.value?.statusCode} - ${error.value?.message}`);
-      // if (error.value?.statusCode == 401) {
-      //   router.replace("/login");
-      // }
+      if (error.value?.statusCode == 401) {
+        router.replace("/login");
+      }
     }
     const erro: typeof error.value = error.value;
     return { info: data.value as R, error: erro };
