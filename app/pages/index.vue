@@ -1,5 +1,4 @@
 <script setup lang="ts">
-setPageLayout("blank");
 // const { send } = useMlProxy();
 const route = useRouter();
 // const search = async () => {

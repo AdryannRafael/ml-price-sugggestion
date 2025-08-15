@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <Page>
-    <div>Analise de preços</div>
-  </Page>
+  <Page> Adryann </Page>
 </template>
+
+<style scoped></style>
