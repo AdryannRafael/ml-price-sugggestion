@@ -7,10 +7,11 @@ export default defineEventHandler<any>(async (event) => {
 
   const mlUri: string = config.ML_BASE_URI!;
   const sessionId = getCookie(event, ML_SESSION);
-  if (!sessionId) throw createError({ statusCode: 401 });
+  if (!sessionId)
+    return createError({ statusCode: 401, message: "Unautorized" });
 
   const session = await getSession(sessionId);
-  if (!session) throw createError({ statusCode: 401 });
+  if (!session) return createError({ statusCode: 401 });
 
   const { request } = await readBody(event);
   const { path, userID }: MlProxyFetch<any> = request;
@@ -27,6 +28,7 @@ export default defineEventHandler<any>(async (event) => {
       },
       method: "GET",
     });
+
     return fetchedMlRes;
   } catch ({ data }: any) {
     return createError({

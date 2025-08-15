@@ -9,6 +9,9 @@ export default defineNuxtConfig({
     configPath: "~/tailwind.config.js",
     exposeConfig: false,
   },
+  build: {
+    transpile: ["clsx", "tailwind-merge"],
+  },
   // app: {
   //   pageTransition: { name: "page", mode: "out-in" },
   // },

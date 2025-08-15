@@ -8,7 +8,7 @@
         <AppLogo />
         <div class="flex text-base text-white font-medium">
           <img style="width: 40px" src="/logoml.svg" />
-          <span class="pl-2">Adryann Rafael</span>
+          <span class="pl-2">{{ auth?.name }}</span>
         </div>
         <!-- Menu para desktop
         <div class="hidden md:block"></div> -->
@@ -17,6 +17,8 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { auth } = useAuthMl();
+</script>
 
 <style scoped></style>
